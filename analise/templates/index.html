@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Previsão de Inadimplência</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', 'Roboto', Arial, sans-serif;
+            background: linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.25);
+            -webkit-backdrop-filter: blur(12px) saturate(160%);
+            backdrop-filter: blur(12px) saturate(160%);
+            padding: 44px 38px 36px 38px;
+            border-radius: 22px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.22), 0 0 0 4px #a1c4fd33;
+            width: 100%;
+            max-width: 430px;
+            transition: box-shadow 0.3s;
+            animation: fadeInUp 1s cubic-bezier(.39,.575,.56,1.000);
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(40px) scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo-faculdade {
+            display: block;
+            margin: 0 auto 20px auto;
+            max-width: 120px;
+            max-height: 90px;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px 0 #a1c4fd44, 0 1.5px 8px #fff8;
+            background: #fff;
+            padding: 8px;
+            transition: transform 0.4s cubic-bezier(.39,.575,.56,1.000), box-shadow 0.3s;
+            animation: logoPop 1.2s cubic-bezier(.39,.575,.56,1.000);
+        }
+
+        .logo-faculdade:hover {
+            transform: scale(1.07) rotate(-2deg);
+            box-shadow: 0 8px 32px 0 #6ea8fe55, 0 2px 12px #fff9;
+        }
+
+        @keyframes logoPop {
+            0% { opacity: 0; transform: scale(0.7);}
+            80% { opacity: 1; transform: scale(1.1);}
+            100% { opacity: 1; transform: scale(1);}
+        }
+
+        h1 {
+            text-align: center;
+            color: #2d3a4b;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            font-size: 2.1em;
+            font-weight: 700;
+            text-shadow: 0 2px 8px #c2e9fb88;
+            animation: fadeIn 1.5s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0;}
+            to { opacity: 1;}
+        }
+
+        form {
+            margin-top: 18px;
+            animation: fadeIn 1.7s;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            font-weight: 600;
+            color: #3a4a5d;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+            transition: color 0.2s;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 13px 15px;
+            margin-top: 7px;
+            border: 1.5px solid #e0e7ef;
+            border-radius: 12px;
+            box-sizing: border-box;
+            font-size: 16px;
+            background: rgba(247,250,253,0.85);
+            transition: border-color 0.25s, box-shadow 0.25s, background 0.25s;
+            outline: none;
+        }
+
+        input[type="number"]:focus {
+            border-color: #6ea8fe;
+            background: #e3f0ff;
+            box-shadow: 0 0 0 3px #a1c4fd44;
+        }
+
+        button {
+            margin-top: 30px;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(90deg, #007bff 0%, #6ea8fe 100%);
+            color: white;
+            font-size: 18px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(0,123,255,0.10);
+            transition: background 0.2s, transform 0.13s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        button::after {
+            content: "";
+            position: absolute;
+            left: -50%;
+            top: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(120deg, #fff6 0%, #fff0 60%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            background: linear-gradient(90deg, #0056b3 0%, #4f8efc 100%);
+            transform: translateY(-2px) scale(1.025);
+            box-shadow: 0 4px 20px #6ea8fe44;
+        }
+
+        button:hover::after {
+            opacity: 1;
+            animation: shine 0.8s;
+        }
+
+        @keyframes shine {
+            0% { left: -50%; opacity: 0.2;}
+            50% { left: 50%; opacity: 0.5;}
+            100% { left: 120%; opacity: 0;}
+        }
+
+        .resultado {
+            margin-top: 34px;
+            font-size: 20px;
+            text-align: center;
+            padding: 20px 14px;
+            border-radius: 14px;
+            background: linear-gradient(90deg, #f9fafb 0%, #e3f0ff 100%);
+            color: #2d3a4b;
+            border: 1.5px solid #e0e7ef;
+            box-shadow: 0 2px 12px rgba(100, 150, 255, 0.09);
+            animation: fadeInUp 1.2s;
+        }
+
+        .resultado b {
+            color: #007bff;
+            text-shadow: 0 1px 4px #a1c4fd55;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 18px 4vw 12px 4vw;
+                max-width: 98vw;
+            }
+            h1 {
+                font-size: 1.2em;
+            }
+            .logo-faculdade {
+                max-width: 80px;
+                max-height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('static', filename='img/logo-fbr.webp') }}" alt="Logo da Faculdade" class="logo-faculdade">
+        <h1>Previsão de Inadimplência</h1>
+        <form method="post">
+            <label for="idade">Idade:</label>
+            <input type="number" step="any" name="idade" required placeholder="Digite a idade" title="Idade do cliente">
+
+            <label for="renda_mensal">Renda Mensal:</label>
+            <input type="number" step="any" name="renda_mensal" required placeholder="Digite a renda" title="Idade do cliente">
+
+            <label for="valor_emprestimo">Valor do Empréstimo:</label>
+            <input type="number" step="any" name="valor_emprestimo" required placeholder="Digite o valor do empréstimo" title="Valor do empréstimo">
+
+            <label for="tempo_emprego">Tempo de Emprego (anos):</label>
+            <input type="number" step="any" name="tempo_emprego" required placeholder="Digite o tempo de emprego" title="Tempo de emprego">
+
+            <label for="pontuacao_credito">Pontuação de Crédito:</label>
+            <input type="number" step="any" name="pontuacao_credito" required placeholder="Digite a pontuação de crédito" title="Pontuação de crédito">
+
+            <button type="submit">Prever Inadimplência</button>
+        </form>
+
+        {% if pred is not none %}
+            <div class="resultado">
+                <strong>Resultado:</strong><br>
+                {% if pred == 1 %}
+                    O cliente <b>tem risco</b> de inadimplência.
+                {% else %}
+                    O cliente <b>não apresenta risco</b> de inadimplência.
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
